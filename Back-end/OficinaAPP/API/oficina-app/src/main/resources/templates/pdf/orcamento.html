@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Orçamento - OficinaAPP</title>
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 14px; color: #333; }
+        .header { background-color: #1e293b; color: #fff; padding: 20px; text-align: center; margin-bottom: 20px; border-bottom: 4px solid #38bdf8; }
+        .header h1 { margin: 0; font-size: 24px; }
+        .header h2 { margin: 5px 0 0 0; font-size: 18px; color: #38bdf8; }
+
+        .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .section h3 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; color: #1e293b; text-transform: uppercase; font-size: 14px; }
+        .info-row { margin-bottom: 5px; }
+        .info-row strong { color: #555; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f8fafc; color: #333; font-weight: bold; text-transform: uppercase; font-size: 12px; }
+
+        .total-box { text-align: right; margin-top: 30px; font-size: 18px; padding: 15px; background-color: #f1f5f9; border-radius: 5px; color: #0f172a; }
+        .total-box span { font-weight: bold; color: #0ea5e9; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>OficinaAPP</h1>
+    <h2 th:text="'ORÇAMENTO Nº ' + ${orcamento.idOrcamento}">ORÇAMENTO Nº 000</h2>
+    <p>
+        Data: <strong th:text="${#temporals.format(orcamento.data, 'dd/MM/yyyy')}">--/--/----</strong> |
+        Situação: <strong th:text="${orcamento.situacao}">SITUAÇÃO</strong>
+    </p>
+</div>
+
+<div class="section" th:if="${cliente != null}">
+    <h3>Dados do Cliente</h3>
+    <div class="info-row"><strong>Nome:</strong> <span th:text="${cliente.nome}"></span></div>
+    <div class="info-row"><strong>CPF/CNPJ:</strong> <span th:text="${cliente.cpfCnpj}"></span></div>
+    <div class="info-row"><strong>Telefone:</strong> <span th:text="${cliente.telefone}"></span></div>
+</div>
+
+<div class="section" th:if="${veiculo != null}">
+    <h3>Dados do Veículo</h3>
+    <div class="info-row"><strong>Modelo:</strong> <span th:text="${veiculo.modelo}"></span></div>
+    <div class="info-row"><strong>Placa:</strong> <span th:text="${veiculo.placa}"></span></div>
+</div>
+
+<div class="section">
+    <h3>Descrição de Serviços</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Serviço</th>
+            <th>Qtd Horas</th>
+            <th>Valor Hora</th>
+            <th>Desconto</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="item : ${itens}">
+            <td th:text="${item.servico.nome}"></td>
+            <td th:text="${item.qtdHoras}"></td>
+            <td th:text="'R$ ' + ${item.servico.valor}"></td>
+            <td th:text="'R$ ' + ${item.desconto}"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(itens)}">
+            <td colspan="4" style="text-align: center; color: #888;">Nenhum serviço registrado neste orçamento.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="total-box">
+    Valor Total do Orçamento:
+    R$ <span th:text="${orcamento.valorTotal}">0.00</span>
+</div>
+</body>
+</html>

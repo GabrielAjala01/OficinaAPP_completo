@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "postgresql",
+      "type": "java.lang.String",
+      "description": "Description for postgresql."
+  }
+] }
