@@ -3,6 +3,7 @@ import '../services/auth_service.dart';
 import 'login_screen.dart';
 import 'clientes_screen.dart';
 import 'servicos_screen.dart';
+import 'orcamentos_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -76,7 +77,10 @@ class DashboardScreen extends StatelessWidget {
               );
             }),
             _buildMenuCard(context, 'Orçamentos', Icons.request_quote, () {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Módulo de Orçamentos')));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const OrcamentosScreen()),
+              );
             }),
             _buildMenuCard(context, 'Ordens de Serviço', Icons.assignment, () {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Módulo de Ordens de Serviço')));
